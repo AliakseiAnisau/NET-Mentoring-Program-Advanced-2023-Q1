@@ -6,7 +6,7 @@ using CartingService.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
 
-using static Testing;
+using static CartingService.Application.IntegrationTests.Testing;
 
 namespace CartingService.Application.IntegrationTests.TodoItems.Commands;
 public class DeleteTodoItemTests : BaseTestFixture

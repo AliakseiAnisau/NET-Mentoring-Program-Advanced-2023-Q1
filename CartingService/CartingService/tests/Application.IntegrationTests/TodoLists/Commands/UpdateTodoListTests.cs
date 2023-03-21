@@ -5,7 +5,7 @@ using CartingService.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
 
-using static Testing;
+using static CartingService.Application.IntegrationTests.Testing;
 
 namespace CartingService.Application.IntegrationTests.TodoLists.Commands;
 public class UpdateTodoListTests : BaseTestFixture
