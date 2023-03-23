@@ -37,6 +37,7 @@
     <Using Include=" CartingService.Application.IntegrationTests.Testing" Alias="Testing" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Service\Service.csproj" />
     <ProjectReference Include="..\..\src\WebUI\WebUI.csproj" />
   </ItemGroup>
 
