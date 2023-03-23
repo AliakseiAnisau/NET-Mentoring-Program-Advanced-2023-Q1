@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using CartingService.Application.Common.Interfaces;
 using CartingService.Domain.Entities;
+using CartingService.Infrastructure.Common;
 using CartingService.Infrastructure.Identity;
 using CartingService.Infrastructure.Persistence.Interceptors;
 using Duende.IdentityServer.EntityFramework.Options;

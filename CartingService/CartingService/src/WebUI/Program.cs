@@ -1,4 +1,7 @@
+using CartingService.Application;
+using CartingService.Infrastructure;
 using CartingService.Infrastructure.Persistence;
+using CartingService.WebUI;
 
 var builder = WebApplication.CreateBuilder(args);
 

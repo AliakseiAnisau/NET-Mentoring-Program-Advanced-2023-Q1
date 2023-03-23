@@ -1,4 +1,5 @@
-﻿using CartingService.Infrastructure.Identity;
+﻿using CartingService.Application.Common.Interfaces;
+using CartingService.Infrastructure.Identity;
 using CartingService.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -106,6 +107,17 @@ public partial class Testing
 
         return await context.FindAsync<TEntity>(keyValues);
     }
+
+    public static TEntity? Find<TEntity>(string key)
+       where TEntity : class
+    {
+        using var scope = _scopeFactory.CreateScope();
+
+        var context = scope.ServiceProvider.GetRequiredService<ICartingDbContext>();
+
+        return context.Get<TEntity>(key);
+    }
+
 
     public static async Task AddAsync<TEntity>(TEntity entity)
         where TEntity : class

@@ -1,7 +1,8 @@
 ﻿using CartingService.Domain.Common;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace MediatR;
+namespace CartingService.Infrastructure.Common;
 public static class MediatorExtensions
 {
     public static async Task DispatchDomainEvents(this IMediator mediator, DbContext context)
