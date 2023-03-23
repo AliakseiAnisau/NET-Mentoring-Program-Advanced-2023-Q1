@@ -1,8 +1,9 @@
 ﻿using NUnit.Framework;
 
-using static CartingService.Application.IntegrationTests.Testing;
-
 namespace CartingService.Application.IntegrationTests;
+
+using static Testing;
+
 [TestFixture]
 public abstract class BaseTestFixture
 {
