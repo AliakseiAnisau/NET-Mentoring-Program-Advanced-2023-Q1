@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CartingService.Application.Common.Exceptions;
 using CartingService.Application.Common.Interfaces;
 using CartingService.Domain.Entities;
 using MediatR;
@@ -23,7 +24,8 @@ public class GetCartQueryHandler : IRequestHandler<GetCartQuery, CartDto>
     public async Task<CartDto> Handle(GetCartQuery request, CancellationToken cancellationToken)
     {
         var cart = _context.Get<Cart>(request.CartId);
-
+        if (cart == null)
+            throw new NotFoundException(typeof(Cart).Name, request.CartId);
         return _mapper.Map<Cart, CartDto>(cart);
     }
 }
