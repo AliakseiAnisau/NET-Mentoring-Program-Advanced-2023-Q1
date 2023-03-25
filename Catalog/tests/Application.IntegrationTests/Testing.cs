@@ -1,4 +1,5 @@
-﻿using Catalog.Infrastructure.Identity;
+﻿using Catalog.Domain.Entities;
+using Catalog.Infrastructure.Identity;
 using Catalog.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -108,7 +109,7 @@ public partial class Testing
         return await context.FindAsync<TEntity>(keyValues);
     }
 
-    public static async Task AddAsync<TEntity>(TEntity entity)
+    public static async Task<TEntity> AddAsync<TEntity>(TEntity entity)
         where TEntity : class
     {
         using var scope = _scopeFactory.CreateScope();
@@ -118,6 +119,8 @@ public partial class Testing
         context.Add(entity);
 
         await context.SaveChangesAsync();
+
+        return entity;
     }
 
     public static async Task<int> CountAsync<TEntity>() where TEntity : class
@@ -128,6 +131,15 @@ public partial class Testing
 
         return await context.Set<TEntity>().CountAsync();
     }
+
+    public static IList<TEntity> GetAll<TEntity>() where TEntity : class
+    {
+        using var scope = _scopeFactory.CreateScope();
+
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        return context.Set<TEntity>().ToList();
+    }
+
 
     [OneTimeTearDown]
     public void RunAfterAnyTests()
