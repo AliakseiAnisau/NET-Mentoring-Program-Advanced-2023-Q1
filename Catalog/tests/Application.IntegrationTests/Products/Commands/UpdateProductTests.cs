@@ -34,7 +34,7 @@ public class UpdateProductTests : BaseTestFixture
         });
 
 
-        var product = await AddAsync(new Product()
+        var product = await AddAsync(new Item()
         {
             Name = "New product",
             Price = 5.99M,
@@ -54,7 +54,7 @@ public class UpdateProductTests : BaseTestFixture
         };
 
         var updatedProductId = await SendAsync(updateCommand);
-        var updatedProduct = await FindAsync<Product>(updatedProductId);
+        var updatedProduct = await FindAsync<Item>(updatedProductId);
 
 
         product.Should().NotBeNull();

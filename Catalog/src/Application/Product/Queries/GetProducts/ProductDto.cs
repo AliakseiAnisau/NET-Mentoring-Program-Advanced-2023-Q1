@@ -4,7 +4,7 @@ using Catalog.Domain.Entities;
 
 namespace Catalog.Application.Products.Queries.GetProducts;
 
-public class ProductDto : IMapFrom<Product>
+public class ProductDto : IMapFrom<Item>
 {
     public int Id { get; set; }
 
@@ -24,7 +24,7 @@ public class ProductDto : IMapFrom<Product>
 
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<Product, ProductDto>()
+        profile.CreateMap<Item, ProductDto>()
             .ForMember(d => d.CategoryName, opt => opt.MapFrom(s => s.Category.Name));
     }
 }

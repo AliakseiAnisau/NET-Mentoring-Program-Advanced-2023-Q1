@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Catalog.Infrastructure.Persistence.Configurations;
 
-public class ProductConfiguration : IEntityTypeConfiguration<Product>
+public class ProductConfiguration : IEntityTypeConfiguration<Item>
 {
-    public void Configure(EntityTypeBuilder<Product> builder)
+    public void Configure(EntityTypeBuilder<Item> builder)
     {
         builder.Property(t => t.Name)
             .HasMaxLength(50)

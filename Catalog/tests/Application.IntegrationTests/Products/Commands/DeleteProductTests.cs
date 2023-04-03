@@ -19,7 +19,7 @@ public class DeleteProductTests : BaseTestFixture
             Name = "Example Category1",
         });
 
-        var product = await AddAsync(new Product()
+        var product = await AddAsync(new Item()
         {
             Name = "New product",
             Price = 5.99M,
@@ -34,11 +34,11 @@ public class DeleteProductTests : BaseTestFixture
 
         var deletedProductId = await SendAsync(deleteCommand);
 
-        var removedProduct = await FindAsync<Product>(product.Id);
+        var removedProduct = await FindAsync<Item>(product.Id);
 
         removedProduct.Should().BeNull();
 
-        (await FindAsync<Product>(deletedProductId)).Should().BeNull();
+        (await FindAsync<Item>(deletedProductId)).Should().BeNull();
 
     }
 

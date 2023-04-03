@@ -24,7 +24,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     public DbSet<Category> Categories => Set<Category>();
 
-    public DbSet<Product> Products => Set<Product>();
+    public DbSet<Item> Products => Set<Item>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

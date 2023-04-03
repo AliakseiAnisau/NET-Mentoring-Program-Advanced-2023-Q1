@@ -1,6 +1,6 @@
 ﻿namespace Catalog.Domain.Entities;
 
-public class Product : BaseAuditableEntity
+public class Item : BaseAuditableEntity
 {
     public string Name { get; set; }
 

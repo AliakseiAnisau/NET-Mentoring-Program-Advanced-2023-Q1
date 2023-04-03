@@ -48,7 +48,7 @@ public class DeleteCategoryTests : BaseTestFixture
     {
         var category = await AddAsync(new Category() { Name = "New category" });
 
-        var product = await AddAsync(new Product()
+        var product = await AddAsync(new Item()
         {
             Name = "New product",
             Price = 5.99M,
@@ -63,7 +63,7 @@ public class DeleteCategoryTests : BaseTestFixture
 
         var deletedCategoryId = await SendAsync(deleteCommand);
         var deletedCategory = await FindAsync<Category>(category.Id);
-        var products = GetAll<Product>();
+        var products = GetAll<Item>();
 
         deletedCategory.Should().BeNull();
         category.Id.Should().Be(deletedCategoryId);
