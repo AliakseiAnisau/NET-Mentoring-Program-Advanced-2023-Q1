@@ -33,7 +33,14 @@ public class RemoveItemFromCartCommandHandler : IRequestHandler<RemoveItemFromCa
 
         cart.Items.Remove(cartItem);
 
-        _context.Update(cart);
+        if (cart.Items.Any())
+        {
+            _context.Delete<Cart>(cart.Id);
+        }
+        else 
+        {
+            _context.Update(cart);
+        }
 
         return Task.FromResult(cart.Id);
     }

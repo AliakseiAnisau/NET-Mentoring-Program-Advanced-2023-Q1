@@ -39,4 +39,12 @@ public class CartingDbContext : ICartingDbContext
         var col = db.GetCollection<T>(typeof(T).Name);
         col.Update(entity);
     }
+
+    public void Delete<T>(string id)
+    {
+        using var db = new LiteDatabase(_persistenceConfiguration.Value.ConnectionString);
+
+        var col = db.GetCollection<T>(typeof(T).Name);
+        col.Delete(id);
+    }
 }
