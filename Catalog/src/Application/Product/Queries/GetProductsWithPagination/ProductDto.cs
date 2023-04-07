@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Catalog.Application.Common.Mappings;
+using Catalog.Application.Common.Models;
 
 namespace Catalog.Application.Product.Queries.GetProductsWithPagination;
 
-public class ProductDto : IMapFrom<Domain.Entities.Item>
+public class ProductDto : HateoasDto, IMapFrom<Domain.Entities.Item>
 {
     public int Id { get; set; }
 
@@ -21,9 +22,11 @@ public class ProductDto : IMapFrom<Domain.Entities.Item>
 
     public int Amount { get; set; }
 
+
     public void Mapping(Profile profile)
     {
         profile.CreateMap<Domain.Entities.Item, ProductDto>()
-            .ForMember(d => d.CategoryName, opt => opt.MapFrom(s => s.Category.Name));
+            .ForMember(d => d.CategoryName, opt => opt.MapFrom(s => s.Category.Name))
+            .ForMember(d => d.Links, opt => opt.Ignore());
     }
 }

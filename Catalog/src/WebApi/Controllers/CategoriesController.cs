@@ -2,22 +2,32 @@
 using Catalog.Application.Categorys.Commands.DeleteCategory;
 using Catalog.Application.Categorys.Commands.UpdateCategory;
 using Catalog.Application.TodoLists.Queries.GetCategories;
+using Catalog.WebApi.Helpers;
+using Catalog.WebApi.Model;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.WebApi.Controllers;
 
 public class CategoriesController : ApiControllerBase
 {
-    [HttpGet]
-    public async Task<ActionResult<CategoriesVm>> GetCategories()
+    private readonly LinkGenerator _linkGenerator;
+
+    public CategoriesController(LinkGenerator linkGenerator, ISender mediator) : base(mediator)
     {
-        return await Mediator.Send(new GetCategoriesQuery());
+        _linkGenerator = linkGenerator;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<HateoasResponse<CategoriesVm>>> GetCategories()
+    {
+        return HateoasHelper.CreateLinksForCategories(HttpContext, _linkGenerator, await _mediator.Send(new GetCategoriesQuery()));
     }
 
     [HttpPost]
     public async Task<ActionResult<int>> Create(CreateCategoryCommand command)
     {
-        return await Mediator.Send(command);
+        return await _mediator.Send(command);
     }
 
     [HttpPut("{id}")]
@@ -28,7 +38,7 @@ public class CategoriesController : ApiControllerBase
             return BadRequest();
         }
 
-        await Mediator.Send(command);
+        await _mediator.Send(command);
 
         return NoContent();
     }
@@ -36,7 +46,7 @@ public class CategoriesController : ApiControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
     {
-        await Mediator.Send(new DeleteCategoryCommand() {  Id = id });
+        await _mediator.Send(new DeleteCategoryCommand() {  Id = id });
 
         return NoContent();
     }
