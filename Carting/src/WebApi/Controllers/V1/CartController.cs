@@ -17,10 +17,7 @@ public class CartsController : ApiControllerBase
     /// <remarks>
     /// Sample request:
     ///
-    ///     GET /
-    ///     {
-    ///        "CartId": 1
-    ///     }
+    ///     GET /Carts?CartId=1
     ///
     /// </remarks>
     /// <response code="200">Returns the cart</response>
@@ -36,15 +33,15 @@ public class CartsController : ApiControllerBase
     }
 
     /// <summary>
-    /// Adds an item to a specific cart. If there was no cart for the specifiec key, it creates the cart as well.
+    /// Adds an item to a specific cart. If there was no cart for the specifiedkey, it creates the cart as well.
     /// </summary>
-    /// <param name="cartId"></param>
+    /// <param name="cartId">External id of the cart</param>
     /// <param name="command"></param>
     /// <returns></returns>
     /// <remarks>
     /// Sample request:
     ///
-    ///     POST /some-id/Items
+    ///     POST /Carts/some-id/Items
     ///     {
     ///        "Id": 1,
     ///        "Name": "Some item name",
@@ -66,7 +63,7 @@ public class CartsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [Route("{cartId}/Items")]
     [HttpPost]
-    public async Task<ActionResult> AddItemToCart(string cartId, AddItemToCartCommandDto command)
+    public async Task<ActionResult> AddItemToCart(string cartId, AddItemToCartDto command)
     {
         var addItemToCartCommand = new AddItemToCartCommand()
         {
@@ -85,15 +82,15 @@ public class CartsController : ApiControllerBase
     }
 
     /// <summary>
-    /// Adds an item to a specific cart. If there was no cart for the specifiec key, it creates the cart as well.
+    /// Adds an item to a specific cart. If there was no cart for the specifiedkey, it creates the cart as well.
     /// </summary>
-    /// <param name="cartId"></param>
-    /// <param name="itemId"></param>
+    /// <param name="cartId">External id of the cart</param>
+    /// <param name="itemId">External id of the item</param>
     /// <returns></returns>
     /// <remarks>
     /// Sample request:
     ///
-    ///     POST /some-id/Items/1
+    ///     POST /Carts/some-id/Items/1
     ///     {
     ///        "Name": "Some item name",
     ///        "CurrencyCode": "EUR",
