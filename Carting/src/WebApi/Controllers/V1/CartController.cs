@@ -55,10 +55,10 @@ public class CartsController : ApiControllerBase
     ///     }
     ///
     /// </remarks>
-    /// <response code="201">Item created</response>
+    /// <response code="200">Item created</response>
     /// <response code="422">Request couldn't be processed - item is already added</response>
     /// <response code="500">Server error</response>
-    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [Route("{cartId}/Items")]
@@ -78,7 +78,7 @@ public class CartsController : ApiControllerBase
 
         await Mediator.Send(addItemToCartCommand);
 
-        return StatusCode(StatusCodes.Status201Created);
+        return Ok();
     }
 
     /// <summary>
