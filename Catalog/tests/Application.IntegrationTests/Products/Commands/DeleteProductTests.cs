@@ -3,7 +3,7 @@ using Catalog.Application.Products.Commands.DeleteProduct;
 using Catalog.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
-using Catalog.Application.Products.Commands.CreateProduct;
+using Product = Catalog.Domain.Entities.Item;
 
 namespace Catalog.Application.IntegrationTests.Products.Commands;
 
@@ -19,7 +19,7 @@ public class DeleteProductTests : BaseTestFixture
             Name = "Example Category1",
         });
 
-        var product = await AddAsync(new Item()
+        var product = await AddAsync(new Domain.Entities.Item()
         {
             Name = "New product",
             Price = 5.99M,
@@ -29,16 +29,16 @@ public class DeleteProductTests : BaseTestFixture
 
         var deleteCommand = new DeleteProductCommand
         {
-            ProductId = product.Id
+            Id = product.Id
         };
 
         var deletedProductId = await SendAsync(deleteCommand);
 
-        var removedProduct = await FindAsync<Item>(product.Id);
+        var removedProduct = await FindAsync<Domain.Entities.Item>(product.Id);
 
         removedProduct.Should().BeNull();
 
-        (await FindAsync<Item>(deletedProductId)).Should().BeNull();
+        (await FindAsync<Domain.Entities.Item>(deletedProductId)).Should().BeNull();
 
     }
 
@@ -47,7 +47,7 @@ public class DeleteProductTests : BaseTestFixture
     {
         var command = new DeleteProductCommand
         {
-            ProductId = 9999
+            Id = 9999
         };
 
         Func<Task> act = async () => await SendAsync(command);

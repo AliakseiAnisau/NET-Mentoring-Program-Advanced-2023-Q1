@@ -29,7 +29,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         if (!_context.Categories.Any(c => c.Id == request.CategoryId))
             throw new CategoryNotFoundException();
 
-        var entity = new Item();
+        var entity = new Domain.Entities.Item();
 
         entity.Name = request.Name;
         entity.Description = request.Description;
