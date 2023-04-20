@@ -1,9 +1,9 @@
 ﻿using Catalog.Application.Common.Exceptions;
-using Catalog.Application.Common.Extensions;
 using Catalog.Application.Common.Interfaces;
 using Catalog.Application.Outbox;
 using MediatR;
 using Messaging.Contracts;
+using Newtonsoft.Json;
 
 namespace Catalog.Application.Products.Commands.UpdateProduct;
 
@@ -21,10 +21,15 @@ public record UpdateProductCommand : IRequest<int>
 public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, int>
 {
     private readonly IApplicationDbContext _context;
+    private readonly JsonSerializerSettings _jsonSerializerSettings;
 
     public UpdateProductCommandHandler(IApplicationDbContext context)
     {
         _context = context;
+        _jsonSerializerSettings = new JsonSerializerSettings()
+        {
+            TypeNameHandling = TypeNameHandling.All
+        };
     }
 
     public async Task<int> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
@@ -33,7 +38,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         if (entity == null)
             throw new NotFoundException();
 
-        var oldEntityCopy = entity.Copy();
+        var oldPrice = entity.Price;
 
         try
         {
@@ -48,8 +53,11 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
 
             _context.Products.Update(entity);
 
-            AddIntegrationEvent(entity.Id, oldEntityCopy.Price, entity.Price);
+            AddIntegrationEvent(entity.Id, oldPrice, entity.Price);
 
+            // test
+
+            var a = _context.OutboxMessages.ToList();
             await _context.SaveChangesAsync(cancellationToken);
             await _context.Commit();
             return entity.Id;
@@ -72,8 +80,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         _context.OutboxMessages.Add(new OutboxMessage()
         {
             PublishedDate = null,
-            IntegrationEventType = integrationEvent.GetType().FullName,
-            IntegrationEventJson = System.Text.Json.JsonSerializer.Serialize(integrationEvent)
+            IntegrationEventJson = JsonConvert.SerializeObject(integrationEvent, _jsonSerializerSettings)
         });
     }
 }
