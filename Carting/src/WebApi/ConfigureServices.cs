@@ -7,6 +7,7 @@ using Carting.WebApi.Helpers;
 using Carting.WebApi.Infrastructure.Consumers;
 using Carting.WebApi.Infrastructure.Persistence;
 using Carting.WebApi.Infrastructure.Services;
+using Carting.WebApi.Middlewares;
 using Carting.WebApi.Swagger;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -24,6 +25,7 @@ public static class ConfigureServices
         services.AddHttpContextAccessor();
 
         services.AddHealthChecks();
+        services.AddTransient<IdentityAccessTokenLoggerMiddleware>();
 
         services.AddControllersWithViews(options =>
             options.Filters.Add<ApiExceptionFilterAttribute>())

@@ -1,4 +1,5 @@
 using Carting.WebApi.Application.Common.Configuration;
+using Carting.WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ app.UseSwaggerUI(options =>
 });
 
 app.UseRouting();
+app.UseMiddleware<IdentityAccessTokenLoggerMiddleware>();
 
 app.MapControllerRoute(
     name: "default",
