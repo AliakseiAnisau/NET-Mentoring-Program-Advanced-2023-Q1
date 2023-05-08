@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddConfig(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddWebApiServices();
+builder.Services.AddWebApiServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -35,6 +35,16 @@ app.UseSwaggerUI(options =>
 });
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers()
+        .RequireAuthorization("CartingApiScope");
+});
+
 app.UseMiddleware<IdentityAccessTokenLoggerMiddleware>();
 
 app.MapControllerRoute(

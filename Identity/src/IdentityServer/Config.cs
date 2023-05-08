@@ -23,6 +23,7 @@ namespace IdentityServerAspNetIdentity
             new List<ApiScope>
             {
                 new ApiScope("catalog", "Catalog API"),
+                new ApiScope("carting", "Carting API"),
             };
 
         public static IEnumerable<Client> Clients =>
@@ -42,7 +43,8 @@ namespace IdentityServerAspNetIdentity
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "roles",
-                        "catalog"
+                        "catalog",
+                        "carting"
                     }
                 }
             };

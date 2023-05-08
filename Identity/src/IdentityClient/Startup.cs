@@ -39,6 +39,7 @@ namespace IdentityClient
 
                 options.Scope.Add("openid");
                 options.Scope.Add("catalog");
+                options.Scope.Add("carting");
                 options.Scope.Add("roles");
 
                 options.SaveTokens = true;
