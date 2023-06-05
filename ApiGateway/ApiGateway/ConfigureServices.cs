@@ -1,6 +1,7 @@
 ﻿using ApiGateway.Aggregators;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
+using Ocelot.Cache.CacheManager;
 
 namespace ApiGateway
 {
@@ -11,10 +12,16 @@ namespace ApiGateway
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+
+            //services.AddSwaggerGen();
+            services.AddSwaggerForOcelot(configuration);
 
             services.AddOcelot()
-                .AddSingletonDefinedAggregator<GetProductAggregator>();
+                .AddSingletonDefinedAggregator<GetProductAggregator>()
+                .AddCacheManager(x =>
+                {
+                    x.WithDictionaryHandle();
+                });
 
             services.AddGatewayAuthentication(configuration);
 

@@ -13,6 +13,7 @@
           "Port": 5021
         }
       ],
+      "SwaggerKey": "catalog",
       "Key": "getproduct"
     },
     {
@@ -28,6 +29,10 @@
           "Port": 5021
         }
       ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      },
+      "SwaggerKey": "catalog",
       "Key": "getproductproperties"
     },
     {
@@ -42,7 +47,11 @@
           "Host": "localhost",
           "Port": 5021
         }
-      ]
+      ],
+      "SwaggerKey": "catalog",
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      }
     },
     {
       "UpstreamPathTemplate": "/products",
@@ -60,7 +69,8 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": [ "catalog" ]
-      }
+      },
+      "SwaggerKey": "catalog"
     },
     {
       "UpstreamPathTemplate": "/products/{id}",
@@ -79,7 +89,8 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": [ "catalog" ]
-      }
+      },
+      "SwaggerKey": "catalog"
     },
     {
       "UpstreamPathTemplate": "/categories",
@@ -93,7 +104,8 @@
           "Host": "localhost",
           "Port": 5021
         }
-      ]
+      ],
+      "SwaggerKey": "catalog"
     },
     {
       "UpstreamPathTemplate": "/categories",
@@ -111,7 +123,8 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": [ "catalog" ]
-      }
+      },
+      "SwaggerKey": "catalog"
     },
     {
       "UpstreamPathTemplate": "/categories/{id}",
@@ -130,7 +143,8 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": [ "catalog" ]
-      }
+      },
+      "SwaggerKey": "catalog"
     },
     {
       "UpstreamPathTemplate": "/carts/{cartId}",
@@ -144,7 +158,8 @@
           "Host": "localhost",
           "Port": 5005
         }
-      ]
+      ],
+      "SwaggerKey": "carting"
     },
     {
       "UpstreamPathTemplate": "/carts/{cartId}/items",
@@ -158,7 +173,8 @@
           "Host": "localhost",
           "Port": 5005
         }
-      ]
+      ],
+      "SwaggerKey": "carting"
     },
     {
       "UpstreamPathTemplate": "/carts/{cartId}/items/{itemId}",
@@ -172,7 +188,8 @@
           "Host": "localhost",
           "Port": 5005
         }
-      ]
+      ],
+      "SwaggerKey": "carting"
     }
   ],
   "Aggregates": [
@@ -183,6 +200,33 @@
       ],
       "UpstreamPathTemplate": "/products/{id}",
       "Aggregator": "GetProductAggregator"
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "catalog",
+      "Config": [
+        {
+          "Name": "Catalog API",
+          "Version": "v1",
+          "Url": "https://localhost:5021/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "carting",
+      "Config": [
+        {
+          "Name": "Carting API",
+          "Version": "v1",
+          "Url": "https://localhost:5005/swagger/v1/swagger.json"
+        },
+        {
+          "Name": "Carting API",
+          "Version": "v2",
+          "Url": "https://localhost:5005/swagger/v2/swagger.json"
+        }
+      ]
     }
   ],
   "GlobalConfiguration": {
