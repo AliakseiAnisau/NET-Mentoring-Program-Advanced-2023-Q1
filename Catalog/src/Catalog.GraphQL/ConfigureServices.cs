@@ -3,6 +3,7 @@ using Catalog.GraphQL.GraphQL;
 using Catalog.Infrastructure.Persistence;
 using FluentValidation.AspNetCore;
 using GraphQL;
+using GraphQL.DataLoader;
 using GraphQL.MicrosoftDI;
 using GraphQL.Server;
 using GraphQL.SystemTextJson;
@@ -32,13 +33,24 @@ public static class ConfigureServices
             options.SuppressModelStateInvalidFilter = true);
 
         services.AddGraphQL(b => b
-            .AddHttpMiddleware<ISchema>()
+            .AddHttpMiddleware<CategoriesSchema>()
+            .AddHttpMiddleware<ProductsSchema>()
             //.AddUserContextBuilder(httpContext => new GraphQLUserContext { User = httpContext.User })
             .AddSystemTextJson()
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
             .AddSchema<CategoriesSchema>()
+            .AddSchema<ProductsSchema>()
+            .AddDataLoader()
+            .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
             .AddGraphTypes(typeof(CategoriesQuery).Assembly));
-        services.AddScoped<CategoriesData>();
+
+        services.AddScoped<CategoriesDataLoader>();
+        services.AddScoped<ProductsDataLoader>();
+
+        services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
+        services.AddSingleton<DataLoaderDocumentListener>();
+
+        services.AddSingleton<ProductsSchema>();
 
         services.AddLogging(builder => builder.AddConsole());
         services.AddHttpContextAccessor();
